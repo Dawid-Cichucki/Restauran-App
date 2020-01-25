@@ -1,0 +1,62 @@
+package pl.connectis.restaurant.RestaurantApp.dto;
+
+
+
+import pl.connectis.restaurant.RestaurantApp.model.Client;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+public class ClientDTO {
+
+
+    private Long id;
+    private String name;
+    private String surname;
+    private Double discount;
+
+    public ClientDTO() {
+    }
+
+    public ClientDTO(Client client) {
+        this.id = client.getId();
+        this.name = client.getName();
+        this.surname = client.getSurname();
+        this.discount = client.getDiscount();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+}

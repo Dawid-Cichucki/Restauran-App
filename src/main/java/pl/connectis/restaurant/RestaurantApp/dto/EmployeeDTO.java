@@ -1,7 +1,8 @@
 package pl.connectis.restaurant.RestaurantApp.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import pl.connectis.restaurant.RestaurantApp.model.Employee;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 
 public class EmployeeDTO {
@@ -13,20 +14,27 @@ public class EmployeeDTO {
     private String personalIdentityNumber;
     private String job;
     private Long salary;
-    @JsonIgnore
-    private Employee superior;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private EmployeeDTO superiorDTO;
     private Long superiorNumber;
 
 
-    public EmployeeDTO(Employee employee) {
-        this.id = employee.getId();
-        this.name = employee.getName();
-        this.surname = employee.getSurname();
-        this.personalIdentityNumber = employee.getPersonalIdentityNumber();
-        this.job = employee.getJob();
-        this.salary = employee.getSalary();
-        this.superior = employee.getSuperior();
-        this.superiorNumber = employee.getSuperiorNumber();
+    public EmployeeDTO(Long id,
+                       String name,
+                       String surname,
+                       String personalIdentityNumber,
+                       String job,
+                       Long salary,
+                       EmployeeDTO superiorDTO,
+                       Long superiorNumber) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.personalIdentityNumber = personalIdentityNumber;
+        this.job = job;
+        this.salary = salary;
+        this.superiorDTO = superiorDTO;
+        this.superiorNumber = superiorNumber;
     }
 
     public EmployeeDTO() {
@@ -40,12 +48,12 @@ public class EmployeeDTO {
         this.superiorNumber = superiorNumber;
     }
 
-    public Employee getSuperior() {
-        return superior;
+    public EmployeeDTO getSuperiorDTO() {
+        return superiorDTO;
     }
 
-    public void setSuperior(Employee superior) {
-        this.superior = superior;
+    public void setSuperiorDTO(EmployeeDTO superiorDTO) {
+        this.superiorDTO = superiorDTO;
     }
 
     public Long getId() {

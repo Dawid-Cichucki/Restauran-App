@@ -12,26 +12,27 @@ public class ReceiptDTO {
 
 
     private Long id;
-    private List<Dish> dishList = new ArrayList<>();
-    private List<Drink> drinkList = new ArrayList<>();
+    private List<DishDTO> dishDTOList = new ArrayList<>();
+    private List<DrinkDTO> drinkDTOList = new ArrayList<>();
     private Double totalPrice;
-    private Employee employee;
-    private Client client;
+    private EmployeeDTO employeeDTO;
+    private ClientDTO clientDTO;
     private LocalDateTime localDateTime;
+    private Double tip;
     public ReceiptDTO() {
     }
 
-    public ReceiptDTO(Receipt receipt) {
-        this.id = receipt.getId();
-        this.dishList = receipt.getDishList();
-        this.drinkList = receipt.getDrinkList();
-        this.totalPrice = receipt.getTotalPrice();
-        this.employee = receipt.getEmployee();
-        this.client = receipt.getClient();
-        this.localDateTime = receipt.getLocalDateTime();
+    public ReceiptDTO(Long id,
+                      List<DishDTO> dishDTOList,
+                      List<DrinkDTO> drinkDTOList,
+                      EmployeeDTO employeeDTO,
+                      ClientDTO clientDTO) {
+        this.id = id;
+        this.dishDTOList = dishDTOList;
+        this.drinkDTOList = drinkDTOList;
+        this.employeeDTO = employeeDTO;
+        this.clientDTO = clientDTO;
     }
-
-
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
@@ -49,20 +50,28 @@ public class ReceiptDTO {
         this.id = id;
     }
 
-    public List<Dish> getDishList() {
-        return dishList;
+    public List<DishDTO> getDishDTOList() {
+        return dishDTOList;
     }
 
-    public void setDishList(List<Dish> dishList) {
-        this.dishList = dishList;
+    public void setDishDTOList(List<DishDTO> dishDTOList) {
+        this.dishDTOList = dishDTOList;
     }
 
-    public List<Drink> getDrinkList() {
-        return drinkList;
+    public List<DrinkDTO> getDrinkDTOList() {
+        return drinkDTOList;
     }
 
-    public void setDrinkList(List<Drink> drinkList) {
-        this.drinkList = drinkList;
+    public void setDrinkDTOList(List<DrinkDTO> drinkDTOList) {
+        this.drinkDTOList = drinkDTOList;
+    }
+
+    public Double getTip() {
+        return tip;
+    }
+
+    public void setTip(Double tip) {
+        this.tip = tip;
     }
 
     public Double getTotalPrice() {
@@ -73,19 +82,19 @@ public class ReceiptDTO {
         this.totalPrice = totalPrice;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public EmployeeDTO getEmployeeDTO() {
+        return employeeDTO;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeDTO(EmployeeDTO employeeDTO) {
+        this.employeeDTO = employeeDTO;
     }
 
-    public Client getClient() {
-        return client;
+    public ClientDTO getClientDTO() {
+        return clientDTO;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClientDTO(ClientDTO clientDTO) {
+        this.clientDTO = clientDTO;
     }
 }

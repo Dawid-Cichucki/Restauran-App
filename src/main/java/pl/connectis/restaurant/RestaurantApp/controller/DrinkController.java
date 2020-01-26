@@ -3,10 +3,10 @@ package pl.connectis.restaurant.RestaurantApp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.RestaurantApp.dto.DrinkDTO;
+import pl.connectis.restaurant.RestaurantApp.exception.NotFoundException;
 import pl.connectis.restaurant.RestaurantApp.model.Drink;
 import pl.connectis.restaurant.RestaurantApp.service.DrinkService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,28 +33,38 @@ public class DrinkController {
         return getId;
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public DrinkDTO getDrink(@PathVariable("id") Long id) {
         Optional<Drink> drinkOptional = drinkService.getDrink(id);
-
-        return new DrinkDTO(drinkOptional.get());
+        if (drinkOptional.isPresent()) {
+            return new DrinkDTO(drinkOptional.get());
+        }
+        throw new NotFoundException();
     }
 
-    @GetMapping("allDrinks")
-    public List<Drink> getAllDrinks(){
+    @GetMapping("/allDrinks")
+    public List<Drink> getAllDrinks() {
         return drinkService.getAllDrinks();
     }
 
-    @PutMapping("/update/{id}")
-    public String updateDrink(@PathVariable("id") Long id,@RequestParam Double price){
-        drinkService.updateDrinkPrice(id, price);
-        return "updated drink";
+    @PostMapping("/update/{id}")
+    public String updateDrink(@PathVariable("id") Long id, @RequestParam Double price) {
+        Optional<Drink> drinkOptional = drinkService.getDrink(id);
+        if (drinkOptional.isPresent()) {
+            drinkService.updateDrinkPrice(id, price);
+            return "updated drink";
+        }
+        throw new NotFoundException();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteDrink(@PathVariable("id") Long id){
-        drinkService.removeDrink(id);
-        return "Drink removed";
+    @DeleteMapping("/{id}")
+    public String deleteDrink(@PathVariable("id") Long id) {
+        Optional<Drink> drinkOptional = drinkService.getDrink(id);
+        if (drinkOptional.isPresent()) {
+            drinkService.removeDrink(id);
+            return "Drink removed";
+        }
+        throw new NotFoundException();
     }
 
 }

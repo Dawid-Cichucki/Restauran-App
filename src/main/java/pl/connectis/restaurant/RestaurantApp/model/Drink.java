@@ -3,8 +3,10 @@ package pl.connectis.restaurant.RestaurantApp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Drink {
@@ -12,11 +14,22 @@ public class Drink {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private Double serving;
+
+    @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = false)
     private Boolean isAvailable;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "drinkList")
     private List<Receipt> receiptList;
@@ -89,5 +102,18 @@ public class Drink {
 
     public void setAvailable(Boolean available) {
         isAvailable = available;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Drink drink = (Drink) o;
+        return Objects.equals(id, drink.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

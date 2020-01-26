@@ -1,8 +1,11 @@
 package pl.connectis.restaurant.RestaurantApp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class Employee {
@@ -10,19 +13,30 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String surname;
+
+    @Column(unique = true, nullable = false)
     private String personalIdentityNumber;
+
+    @Column(nullable = false)
     private String job;
+
+    @Column(nullable = false)
     private Long salary;
-    @JsonIgnore
+
     @ManyToOne
     private Employee superior;
+
+    @Column
     private Long superiorNumber;
 
 
-    public Employee(Long id, String name, String surname, String personalIdentityNumber, String job, Long salary, Employee superior) {
-        this.id = id;
+    public Employee( String name, String surname, String personalIdentityNumber, String job, Long salary, Employee superior) {
         this.name = name;
         this.surname = surname;
         this.personalIdentityNumber = personalIdentityNumber;
@@ -97,5 +111,18 @@ public class Employee {
 
     public void setSalary(Long salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

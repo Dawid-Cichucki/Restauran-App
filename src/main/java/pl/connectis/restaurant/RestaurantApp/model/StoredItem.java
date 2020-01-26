@@ -1,9 +1,8 @@
 package pl.connectis.restaurant.RestaurantApp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class StoredItem {
@@ -11,9 +10,16 @@ public class StoredItem {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private Long quantity;
+
+    @Column(nullable = false)
     private UnitsOfMeasure unitOfMeasure;
+
 
     public StoredItem() {
     }
@@ -54,5 +60,18 @@ public class StoredItem {
 
     public void setUnitOfMeasure(UnitsOfMeasure unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StoredItem that = (StoredItem) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

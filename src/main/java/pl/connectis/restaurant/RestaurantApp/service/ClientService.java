@@ -2,6 +2,8 @@ package pl.connectis.restaurant.RestaurantApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.connectis.restaurant.RestaurantApp.dto.ClientDTO;
+import pl.connectis.restaurant.RestaurantApp.exception.BadRequestException;
 import pl.connectis.restaurant.RestaurantApp.model.Client;
 import pl.connectis.restaurant.RestaurantApp.repositories.ClientRepository;
 
@@ -43,7 +45,6 @@ public class ClientService {
             clientRepository.save(client);
             return;
         }
-        throw new RuntimeException();
     }
 
     public void removeClient(Long id) {
@@ -58,7 +59,28 @@ public class ClientService {
         if (isNullOrEmpty(client.getName()) ||
                 isNullOrEmpty(client.getSurname()) ||
                 isNull(client.getDiscount())) {
-            throw new RuntimeException();
+            throw new BadRequestException();
         }
+    }
+
+    public ClientDTO toDTO(Client client){
+        ClientDTO clientDTO = new ClientDTO();
+
+        clientDTO.setDiscount(client.getDiscount());
+        clientDTO.setId(client.getId());
+        clientDTO.setName(client.getName());
+        clientDTO.setSurname(client.getSurname());
+
+        return clientDTO;
+    }
+
+    public Client toModel(ClientDTO clientDTO){
+        Client client = new Client();
+        client.setId(clientDTO.getId());
+        client.setName(clientDTO.getName());
+        client.setSurname(clientDTO.getSurname());
+        client.setDiscount(clientDTO.getDiscount());
+
+        return client;
     }
 }

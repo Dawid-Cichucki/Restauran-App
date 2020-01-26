@@ -2,6 +2,8 @@ package pl.connectis.restaurant.RestaurantApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.connectis.restaurant.RestaurantApp.dto.DrinkDTO;
+import pl.connectis.restaurant.RestaurantApp.exception.BadRequestException;
 import pl.connectis.restaurant.RestaurantApp.model.Drink;
 import pl.connectis.restaurant.RestaurantApp.repositories.DrinkRepository;
 
@@ -76,7 +78,19 @@ public class DrinkService {
                 isNull(drink.getPrice()) ||
                 isNull(drink.getAvailable()) ||
                 isNull(drink.getServing())) {
-            throw new RuntimeException();
+            throw new BadRequestException();
         }
+    }
+
+    public Drink toModel(DrinkDTO drinkDTO){
+        Drink drink = new Drink();
+        drink.setPrice(drinkDTO.getPrice());
+        drink.setAvailable(drinkDTO.getAvailable());
+        drink.setServing(drinkDTO.getServing());
+        drink.setDescription(drinkDTO.getDescription());
+        drink.setName(drinkDTO.getName());
+        drink.setId(drinkDTO.getId());
+
+        return drink;
     }
 }

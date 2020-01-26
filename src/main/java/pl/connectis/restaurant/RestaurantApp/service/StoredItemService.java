@@ -2,6 +2,7 @@ package pl.connectis.restaurant.RestaurantApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.connectis.restaurant.RestaurantApp.exception.BadRequestException;
 import pl.connectis.restaurant.RestaurantApp.model.Dish;
 import pl.connectis.restaurant.RestaurantApp.model.StoredItem;
 import pl.connectis.restaurant.RestaurantApp.model.UnitsOfMeasure;
@@ -47,7 +48,7 @@ public class StoredItemService {
             storedItemRepository.save(storedItem);
             return;
         }
-        throw new RuntimeException();
+
     }
 
     public void removeItem(Long id) {
@@ -70,7 +71,7 @@ public class StoredItemService {
         if (isNullOrEmpty(storedItem.getName()) ||
                 isNull(storedItem.getQuantity()) ||
                 isNull(storedItem.getUnitOfMeasure())) {
-            throw new RuntimeException();
+            throw new BadRequestException();
         }
     }
 }

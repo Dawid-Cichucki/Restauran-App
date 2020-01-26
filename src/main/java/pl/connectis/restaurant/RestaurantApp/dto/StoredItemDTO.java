@@ -21,6 +21,7 @@ public class StoredItemDTO {
     }
 
     public StoredItemDTO(StoredItem storedItem) {
+        this.id = storedItem.getId();
         this.name = storedItem.getName();
         this.quantity = storedItem.getQuantity();
         this.unitOfMeasure = storedItem.getUnitOfMeasure();

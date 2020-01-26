@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Receipt {
@@ -24,7 +25,9 @@ public class Receipt {
     inverseJoinColumns = @JoinColumn(name = "drink_id"))
     private List<Drink> drinkList = new ArrayList<>();
 
+    @Column
     private Double totalPrice;
+
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
@@ -33,7 +36,11 @@ public class Receipt {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @Column
     private LocalDateTime localDateTime;
+
+    @Column
+    private Double tip;
 
     public Receipt() {
     }
@@ -102,5 +109,26 @@ public class Receipt {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Double getTip() {
+        return tip;
+    }
+
+    public void setTip(Double tip) {
+        this.tip = tip;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Receipt receipt = (Receipt) o;
+        return Objects.equals(id, receipt.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
